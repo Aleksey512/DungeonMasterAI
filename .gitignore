@@ -1,3 +1,4 @@
+.null-ls*.py
 /.pants.d/
 /dist
 /.pids
