@@ -1,0 +1,65 @@
+[GLOBAL]
+pants_version = "2.22.1"
+colors = true
+backend_packages = [
+  "pants.backend.docker",
+  "pants.backend.docker.lint.hadolint",
+  "pants.backend.python.lint.autoflake",
+  "pants.backend.python",
+  "pants.backend.python.lint.black",
+  "pants.backend.python.lint.docformatter",
+  "pants.backend.python.lint.flake8",
+  "pants.backend.python.lint.isort",
+  "pants.backend.python.typecheck.mypy",
+  "pants.backend.experimental.go",
+  "pants.backend.shell",
+  "pants.backend.shell.lint.shellcheck",
+  "pants.backend.shell.lint.shfmt",
+]
+
+
+[source]
+root_patterns = ["/"]
+
+[golang]
+minimum_expected_version = "1.19"
+
+[python]
+interpreter_constraints = [">=3.12"]
+enable_resolves = true
+
+[python.resolves]
+auth = "services/auth/auth.lock"
+
+[python-infer]
+use_rust_parser = true
+
+[coverage-py]
+global_report = true
+
+[pytest]
+args = ["-vv", "-s", "-W ignore::DeprecationWarning", "--no-header"]
+
+[isort]
+args = [
+    "-l=88",
+]
+
+[mypy]
+args = [
+    "--ignore-missing-imports",
+    "--local-partial-types",
+    "--pretty",
+    "--color-output",
+    "--error-summary",
+    "--show-error-codes",
+    "--show-error-context",
+]
+
+[docker]
+env_vars = [
+  "ACTIONS_CACHE_URL",
+  "ACTIONS_RUNTIME_TOKEN",
+  "DYNAMIC_TAG",
+]
+use_buildx=true
