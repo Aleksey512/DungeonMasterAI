@@ -4,11 +4,8 @@ python_sources(
     sources=["**/*.py"],
 )
 python_tests(
-    name='tests',
-    sources=['**/test_*.py'],
+    name="tests",
+    sources=["**/test_*.py"],
     resolve="gateway",
 )
-poetry_requirements(
-    name="poetry",
-    resolve="gateway"
-)
+poetry_requirements(name="poetry", resolve="gateway")
