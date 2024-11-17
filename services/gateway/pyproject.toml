@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "auth"
+name = "API Gateway"
 version = "0.1.0"
 description = ""
 authors = ["Aleksey512 <yakunina1111@gmail.com>"]
@@ -9,6 +9,10 @@ readme = "README.md"
 python = "^3.12"
 fastapi = "^0.115.5"
 uvicorn = {extras = ["all"], version = "^0.32.0"}
+pydantic-settings = "^2.6.1"
+pytest = "^8.3.3"
+faker = "^33.0.0"
+pytest-asyncio = "^0.24.0"
 
 
 [tool.pyright]

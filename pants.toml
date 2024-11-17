@@ -19,7 +19,7 @@ backend_packages = [
 
 
 [source]
-root_patterns = ["/"]
+root_patterns = ["/services"]
 
 [golang]
 minimum_expected_version = "1.19"
@@ -29,10 +29,15 @@ interpreter_constraints = [">=3.12"]
 enable_resolves = true
 
 [python.resolves]
-auth = "services/auth/auth.lock"
+gateway = "services/gateway/gateway.lock"
 
 [python-infer]
 use_rust_parser = true
+
+[test]
+output = "all"
+report = false
+use_coverage = true
 
 [coverage-py]
 global_report = true

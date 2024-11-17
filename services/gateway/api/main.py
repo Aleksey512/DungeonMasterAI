@@ -1,8 +1,8 @@
 import uvicorn
-from api.lifespan import lifespan
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from settings.logging import DEBUG, setup_logging
+from gateway.api.lifespan import lifespan
+from gateway.settings.logging import DEBUG, setup_logging
 
 
 def create_app() -> FastAPI:
