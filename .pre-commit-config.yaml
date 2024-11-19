@@ -4,10 +4,23 @@ default_language_version:
 repos:
 - repo: local
   hooks:
+    - id: check-commit-msg
+      name: check-commit-msg
+      entry: |
+        sh -c "
+          commit_msg=$1;
+          echo $commit_msg;
+          # if ! [[ $commit_msg =~ ^(feat|fix|docs|style|refactor|test|chore)(\\(.*\\))?:\\ .+ ]]; then
+          #   echo 'ERROR: Commit message must follow Conventional Commits format (e.g., feat(scope): description)';
+          #   exit 1;
+          # fi
+        "
+      language: system
+      stages: [commit-msg]
       
     - id: check-build-files
       name: check-build-files
-      entry: bash -c "pants tailor --check update-build-files --check ::"
+      entry: sh -c "pants tailor --check update-build-files --check ::"
       language: system
       pass_filenames: false
 
