@@ -1,13 +1,20 @@
 default_stages: [pre-push]
 default_language_version:
   python: python3.12
+
 repos:
+- repo: https://github.com/commitizen-tools/commitizen
+  rev: v3.31.0
+  hooks:
+    - id: commitizen
+      stages: [commit-msg]
+
+
 - repo: local
   hooks:
-      
     - id: check-build-files
       name: check-build-files
-      entry: bash -c "pants tailor --check update-build-files --check ::"
+      entry: sh -c "pants tailor --check update-build-files --check ::"
       language: system
       pass_filenames: false
 
