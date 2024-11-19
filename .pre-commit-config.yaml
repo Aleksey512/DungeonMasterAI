@@ -1,23 +1,15 @@
 default_stages: [pre-push]
 default_language_version:
   python: python3.12
+
 repos:
+- repo: https://github.com/commitizen-tools/commitizen
+  rev: v1.17.0
+  hooks:
+  -   id: commitizen
+
 - repo: local
   hooks:
-    - id: check-commit-msg
-      name: check-commit-msg
-      entry: |
-        sh -c "
-          commit_msg=$1;
-          echo $commit_msg;
-          # if ! [[ $commit_msg =~ ^(feat|fix|docs|style|refactor|test|chore)(\\(.*\\))?:\\ .+ ]]; then
-          #   echo 'ERROR: Commit message must follow Conventional Commits format (e.g., feat(scope): description)';
-          #   exit 1;
-          # fi
-        "
-      language: system
-      stages: [commit-msg]
-      
     - id: check-build-files
       name: check-build-files
       entry: sh -c "pants tailor --check update-build-files --check ::"
