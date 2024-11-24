@@ -603,7 +603,7 @@
         {
           "artifacts": [
             {
-              "algorithm": "sha256",
+              "algorithm": "sha25
               "hash": "44cedb2b7c77a9de33a8b74b2b90e9f50d11fcf25d8270ea525ad71a25374ff7",
               "url": "https://files.pythonhosted.org/packages/96/00/2b325970b3060c7cecebab6d295afe763365822b1306a12eeab198f74323/starlette-0.41.3-py3-none-any.whl"
             },

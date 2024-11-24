@@ -1,6 +1,7 @@
 import uuid
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+
 from typing import ClassVar, Generic, TypeVar
 
 T = TypeVar("T")
@@ -8,6 +9,7 @@ T = TypeVar("T")
 
 @dataclass
 class BaseEvent(ABC, Generic[T]):
+
     """Abstract base class for domain events.
 
     This class provides a template for defining domain events with a unique
