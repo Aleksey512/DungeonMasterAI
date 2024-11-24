@@ -1,17 +1,36 @@
-import json
 import logging
 import logging.config
 import os
-from pathlib import Path
 
 DEBUG = bool(int(os.getenv("DEBUG", False)))
 
-LOG_CONFIG_FILE = Path(__file__).parent / "logging_config.json"
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"},
+        "detailed": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(pathname)s:%(lineno)d - %(message)s"
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "root": {"handlers": ["console"], "level": "INFO", "propagate": True},
+        "uvicorn.error": {"handlers": ["console"], "level": "INFO", "propagate": True},
+        "uvicorn.access": {"handlers": ["console"], "level": "INFO", "propagate": True},
+        "watchfiles": {"level": "ERROR", "propagate": False},
+    },
+}
 
 
 def setup_logging():
-    with LOG_CONFIG_FILE.open() as f:
-        config = json.load(f)
+    config = LOGGING_CONFIG
     if DEBUG:
         config["handlers"]["console"]["level"] = "DEBUG"
         config["loggers"]["root"]["level"] = "DEBUG"
