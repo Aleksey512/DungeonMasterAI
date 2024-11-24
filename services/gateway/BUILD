@@ -9,3 +9,11 @@ python_tests(
     resolve="gateway",
 )
 poetry_requirements(name="poetry", resolve="gateway")
+
+pex_binary(
+    name="bin",
+    resolve="gateway",
+    execution_mode="venv",
+    entry_point="gateway.application.api.main",
+)
+
