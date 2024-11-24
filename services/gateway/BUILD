@@ -13,5 +13,5 @@ pex_binary(
     name="bin",
     resolve="gateway",
     execution_mode="venv",
-    entry_point="gateway.application.api.main"
+    entry_point="gateway.application.api.main",
 )
