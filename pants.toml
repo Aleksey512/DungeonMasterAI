@@ -28,11 +28,17 @@ minimum_expected_version = "1.19"
 interpreter_constraints = [">=3.12"]
 enable_resolves = true
 
+[python-bootstrap]
+search_path = ["<PYENV>", "<PATH>", "<PYENV_LOCAL"]
+
 [python.resolves]
 gateway = "services/gateway/gateway.lock"
 
 [python-infer]
 use_rust_parser = true
+
+[python-repos]
+find_links = ["file://%(buildroot)s/dist"]
 
 [test]
 output = "all"
@@ -47,6 +53,7 @@ args = ["-vv", "-s", "-W ignore::DeprecationWarning", "--no-header"]
 
 [isort]
 args = [
+    "--profile=black",
     "-l=88",
 ]
 
@@ -67,4 +74,6 @@ env_vars = [
   "ACTIONS_RUNTIME_TOKEN",
   "DYNAMIC_TAG",
 ]
-use_buildx=true
+
+[hadolint]
+config_discovery = true
