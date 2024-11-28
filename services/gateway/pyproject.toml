@@ -12,14 +12,20 @@ uvicorn = {extras = ["all"], version = "^0.32.0"}
 pydantic-settings = "^2.6.1"
 pytest = "^8.3.3"
 faker = "^33.0.0"
-pytest-asyncio = "^0.24.0"y
+pytest-asyncio = "^0.23.8"
 punq = "^0.7.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.36"}
+aiosqlite = "^0.20.0"
+alembic = "^1.14.0"
 
 
 [tool.pyright]
 executionEnvironments = [
   { root = ".." }
 ]
+
+[tool.mypy]
+exclude = "^(test|tests)/"
 
 [build-system]
 requires = ["poetry-core"]

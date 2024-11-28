@@ -1,4 +1,5 @@
 .null-ls*.py
+test_reports
 /.pants.d/
 /dist
 /.pids

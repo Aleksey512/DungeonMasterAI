@@ -1,7 +1,6 @@
 import uuid
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-
 from typing import ClassVar, Generic, TypeVar
 
 T = TypeVar("T")

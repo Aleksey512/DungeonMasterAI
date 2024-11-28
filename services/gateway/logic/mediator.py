@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 from gateway.domain.events.base import BaseEvent
+from gateway.infra.uow.base import BaseUnitOfWork
 from gateway.logic.commands.base import CR, CT, BaseCommand, CommandHandler
 from gateway.logic.events.base import ER, ET, EventHandler
 from gateway.logic.mediators.base import (
@@ -19,6 +20,7 @@ class AggregateMediator:
     _queries_mediator: BaseQueriesMediator
     _commands_mediator: BaseCommandMediator
     _events_mediator: BaseEventMediator
+    _unit_of_work: BaseUnitOfWork
 
     def register_command(
         self,
@@ -28,7 +30,8 @@ class AggregateMediator:
         self._commands_mediator.register_command(command, command_handler)
 
     async def handle_command(self, command: BaseCommand[T]) -> T:
-        return await self._commands_mediator.handle_command(command)
+        async with self._unit_of_work:
+            return await self._commands_mediator.handle_command(command)
 
     def register_event(
         self,
@@ -38,7 +41,8 @@ class AggregateMediator:
         self._events_mediator.register_event(event, event_handler)
 
     async def handle_event(self, event: BaseEvent[T]) -> T:
-        return await self._events_mediator.handle_event(event)
+        async with self._unit_of_work:
+            return await self._events_mediator.handle_event(event)
 
     def register_query(
         self,
@@ -48,4 +52,5 @@ class AggregateMediator:
         self._queries_mediator.register_query(query, query_handler)
 
     async def handle_query(self, query: BaseQuery[T]) -> T:
-        return await self.handle_query(query)
+        async with self._unit_of_work:
+            return await self.handle_query(query)

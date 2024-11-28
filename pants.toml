@@ -19,7 +19,10 @@ backend_packages = [
 
 
 [source]
-root_patterns = ["/services"]
+root_patterns = [
+  "/services",
+  "/libs/python",
+]
 
 [golang]
 minimum_expected_version = "1.19"
@@ -29,7 +32,7 @@ interpreter_constraints = [">=3.12"]
 enable_resolves = true
 
 [python-bootstrap]
-search_path = ["<PYENV>", "<PATH>", "<PYENV_LOCAL"]
+search_path = ["<PYENV>", "<PATH>", "<PYENV_LOCAL>"]
 
 [python.resolves]
 gateway = "services/gateway/gateway.lock"
@@ -37,13 +40,13 @@ gateway = "services/gateway/gateway.lock"
 [python-infer]
 use_rust_parser = true
 
-
 [python-repos]
 find_links = ["file://%(buildroot)s/dist"]
 
 [test]
 output = "all"
-report = false
+report = true
+report_dir = "test_reports"
 use_coverage = true
 
 [coverage-py]
@@ -74,6 +77,19 @@ env_vars = [
   "ACTIONS_CACHE_URL",
   "ACTIONS_RUNTIME_TOKEN",
   "DYNAMIC_TAG",
+  "DOCKER_CONFIG=%(env.HOME)s/.docker",
+  "HOME",
+  "USER",
+  "PATH"
+]
+tools = [
+  "docker",
+  "dirname",
+  "readlink",
+  "python3",
+  "cut",
+  "sed",
+  "bash",
 ]
 
 [hadolint]

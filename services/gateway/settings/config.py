@@ -14,3 +14,5 @@ class Config(BaseSettings):
     refresh_token_expire_seconds: int = Field(
         TEN_DAYS, alias="REFRESH_TOKEN_EXPIRY_SECONDS"
     )
+
+    postgresql_url: str = Field("localhost", alias="POSTGRESQL_URL")

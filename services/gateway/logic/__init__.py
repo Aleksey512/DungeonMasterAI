@@ -1,6 +1,8 @@
 from functools import lru_cache
 from typing import TypeVar
 
+from gateway.infra.uow.base import BaseUnitOfWork
+from gateway.infra.uow.sqlalchemy import SQLAlchemyUnitOfWork
 from gateway.logic.mediator import AggregateMediator
 from gateway.logic.mediators.base import (
     BaseCommandMediator,
@@ -14,7 +16,14 @@ from gateway.logic.mediators.queries import QueriesMediator
 from gateway.logic.registries.commands import COMMAND_HANDLER_REGISTRY
 from gateway.logic.registries.events import EVENTS_HANDLER_REGISTRY
 from gateway.logic.registries.queries import QUERIES_HANDLER_REGISTRY
-from punq import Container
+from gateway.settings.config import Config
+from punq import Container, Scope
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 T = TypeVar("T")
 
@@ -27,6 +36,36 @@ class TypedContainer(Container):
 @lru_cache(1)
 def init_container() -> TypedContainer:
     return _init_container()
+
+
+def init_database(container: TypedContainer):
+    config = container.resolve(Config)
+    container.register(
+        AsyncEngine,
+        instance=create_async_engine(config.postgresql_url),
+        scope=Scope.singleton,
+    )
+    container.register(
+        async_sessionmaker,
+        instance=async_sessionmaker(
+            container.resolve(AsyncEngine),
+            expire_on_commit=False,
+            autoflush=False,
+            autocommit=False,
+        ),
+    )
+
+    def init_sesion() -> AsyncSession:
+        return container.resolve(async_sessionmaker)()
+
+    container.register(
+        AsyncSession,
+        factory=init_sesion,
+    )
+
+
+def init_unit_of_work(container: TypedContainer):
+    container.register(BaseUnitOfWork, SQLAlchemyUnitOfWork)
 
 
 def init_command_mediator(container: TypedContainer):
@@ -67,6 +106,9 @@ def init_query_mediator(container: TypedContainer):
 
 def _init_container() -> TypedContainer:
     container = TypedContainer()
+    container.register(Config, instance=Config(), scope=Scope.singleton)  # type:ignore
+    init_database(container)
+    init_unit_of_work(container)
     init_command_mediator(container)
     init_event_mediator(container)
     init_query_mediator(container)
