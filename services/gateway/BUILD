@@ -5,15 +5,13 @@ python_sources(
     sources=["**/*.py"],
     dependencies=[
         ":poetry",
-    ]
+    ],
 )
 python_tests(
     name="tests",
     sources=["**/test_*.py"],
     resolve="gateway",
-    dependencies=[
-        ":python_sources"
-    ]
+    dependencies=[":python_sources"],
 )
 poetry_requirements(name="poetry", resolve="gateway")
 
@@ -25,4 +23,3 @@ pex_binary(
     dependencies=[":python_sources", ":alembic"],
     entry_point="gateway.manage",
 )
-
