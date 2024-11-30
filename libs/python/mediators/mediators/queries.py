@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import Any, TypeVar
 
-from gateway.logic.exceptions.mediator import QueryHandlerNotRegisteredError
-from gateway.logic.mediators.base import BaseQueriesMediator
-from gateway.logic.queries.base import QR, QT, BaseQuery, BaseQueryHandler
+from mediators.exceptions.mediators import QueryHandlerNotRegisteredError
+from mediators.handlers.queries import QR, QT, BaseQuery, BaseQueryHandler
+from mediators.mediators.base import BaseQueriesMediator
 
 T = TypeVar("T", bound=Any)
 

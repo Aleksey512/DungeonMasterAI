@@ -3,13 +3,13 @@ import pytest_asyncio
 from gateway.infra.repositories.sqlalchemy.models import Base
 from gateway.infra.uow.base import BaseUnitOfWork
 from gateway.logic import TypedContainer
-from gateway.logic.mediators.base import (
+from gateway.tests.fixtures import init_dummy_container
+from mediators.mediators.base import (
     BaseCommandMediator,
     BaseEventMediator,
     BaseMediator,
     BaseQueriesMediator,
 )
-from gateway.tests.fixtures import init_dummy_container
 from pytest import fixture
 from sqlalchemy.ext.asyncio import AsyncEngine
 

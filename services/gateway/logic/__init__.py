@@ -4,19 +4,19 @@ from typing import TypeVar
 from gateway.infra.uow.base import BaseUnitOfWork
 from gateway.infra.uow.sqlalchemy import SQLAlchemyUnitOfWork
 from gateway.logic.mediator import AggregateMediator
-from gateway.logic.mediators.base import (
+from gateway.settings.config import Config
+from mediators.mediators.base import (
     BaseCommandMediator,
     BaseEventMediator,
     BaseMediator,
     BaseQueriesMediator,
 )
-from gateway.logic.mediators.commands import CommandMediator
-from gateway.logic.mediators.events import EventMediator
-from gateway.logic.mediators.queries import QueriesMediator
-from gateway.logic.registries.commands import COMMAND_HANDLER_REGISTRY
-from gateway.logic.registries.events import EVENTS_HANDLER_REGISTRY
-from gateway.logic.registries.queries import QUERIES_HANDLER_REGISTRY
-from gateway.settings.config import Config
+from mediators.mediators.commands import CommandMediator
+from mediators.mediators.events import EventMediator
+from mediators.mediators.queries import QueriesMediator
+from mediators.registries.commands import COMMAND_HANDLER_REGISTRY
+from mediators.registries.events import EVENTS_HANDLER_REGISTRY
+from mediators.registries.queries import QUERIES_HANDLER_REGISTRY
 from punq import Container, Scope
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
