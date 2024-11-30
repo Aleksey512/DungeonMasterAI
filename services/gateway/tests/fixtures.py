@@ -6,8 +6,8 @@ from gateway.logic import (
     init_unit_of_work,
 )
 from gateway.logic.mediator import AggregateMediator
-from gateway.logic.mediators.base import BaseMediator
 from gateway.settings.config import Config
+from mediators.mediators.base import BaseMediator
 from punq import Scope
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,

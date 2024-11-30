@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from gateway.logic.registries.base import BaseHandlersRegistry
+from mediators.registries.base import BaseHandlersRegistry
 
 
 @dataclass()

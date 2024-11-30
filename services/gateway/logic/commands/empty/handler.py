@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from gateway.logic.commands.base import CommandHandler
+from mediators.handlers.commands.base import CommandHandler
 
 if TYPE_CHECKING:
     from gateway.logic.commands.empty.command import EmptyCommand  # noqa

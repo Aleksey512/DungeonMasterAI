@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from typing import TypeVar
 
-from gateway.domain.events.base import BaseEvent
-from gateway.logic.events.base import ER, ET, EventHandler
-from gateway.logic.exceptions.mediator import EventHandlerNotRegisteredError
-from gateway.logic.mediators.base import BaseEventMediator
+from mediators.exceptions.mediators import EventHandlerNotRegisteredError
+from mediators.handlers.events import ER, ET, BaseEvent, EventHandler
+from mediators.mediators.base import BaseEventMediator
 
 T = TypeVar("T")
 

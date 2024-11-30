@@ -2,7 +2,7 @@
 import pytest
 from gateway.logic import TypedContainer
 from gateway.logic.commands.test.commands import SessionTestCommand
-from gateway.logic.mediators.base import BaseMediator
+from mediators.mediators.base import BaseMediator
 
 
 @pytest.mark.asyncio

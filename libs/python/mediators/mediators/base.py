@@ -3,10 +3,9 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Protocol, TypeVar
 
-from gateway.domain.events.base import BaseEvent
-from gateway.logic.commands.base import CR, CT, BaseCommand, CommandHandler
-from gateway.logic.events.base import ER, ET, EventHandler
-from gateway.logic.queries.base import QR, QT, BaseQuery, BaseQueryHandler
+from mediators.handlers.commands import CR, CT, BaseCommand, CommandHandler
+from mediators.handlers.events import ER, ET, BaseEvent, EventHandler
+from mediators.handlers.queries import QR, QT, BaseQuery, BaseQueryHandler
 
 T = TypeVar("T", bound=Any)
 

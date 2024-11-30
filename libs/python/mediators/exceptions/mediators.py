@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 
-from gateway.domain.events.base import BaseEvent
-from gateway.logic.commands.base import BaseCommand
-from gateway.logic.exceptions.base import LogicError
-from gateway.logic.queries.base import BaseQuery
+from mediators.exceptions.base import MediatorsError
+from mediators.handlers.commands import BaseCommand
+from mediators.handlers.events import BaseEvent
+from mediators.handlers.queries import BaseQuery
 
 
 @dataclass()
-class CommandHandlerNotRegisteredError(LogicError):
+class CommandHandlerNotRegisteredError(MediatorsError):
     command: BaseCommand
 
     @property
@@ -16,7 +16,7 @@ class CommandHandlerNotRegisteredError(LogicError):
 
 
 @dataclass()
-class EventHandlerNotRegisteredError(LogicError):
+class EventHandlerNotRegisteredError(MediatorsError):
     event: BaseEvent
 
     @property
@@ -25,7 +25,7 @@ class EventHandlerNotRegisteredError(LogicError):
 
 
 @dataclass()
-class QueryHandlerNotRegisteredError(LogicError):
+class QueryHandlerNotRegisteredError(MediatorsError):
     query: BaseQuery
 
     @property

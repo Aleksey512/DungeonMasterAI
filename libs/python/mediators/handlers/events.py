@@ -1,10 +1,19 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, Generic, TypeVar, cast
 
-from gateway.domain.events.base import BaseEvent
-from gateway.logic.base import BaseHandler
-from gateway.logic.registries.events import EVENTS_HANDLER_REGISTRY
+from mediators.handlers.base import BaseHandler
+from mediators.registries.events import EVENTS_HANDLER_REGISTRY
+
+T = TypeVar("T")
+
+
+@dataclass(frozen=True)
+class BaseEvent(ABC, Generic[T]):
+    @abstractmethod
+    def get_key(self) -> bytes:
+        ...
+
 
 ET = TypeVar("ET", bound=BaseEvent)
 ER = TypeVar("ER", bound=Any)

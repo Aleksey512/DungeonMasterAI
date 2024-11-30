@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Any, Generic, TypeVar, cast
 
-from gateway.logic.base import BaseHandler
-from gateway.logic.registries.queries import QUERIES_HANDLER_REGISTRY
+from mediators.handlers.base import BaseHandler
+from mediators.registries.queries import QUERIES_HANDLER_REGISTRY
 
 T = TypeVar("T")
 

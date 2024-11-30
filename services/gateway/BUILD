@@ -3,9 +3,7 @@ python_sources(
     name="python_sources",
     resolve="gateway",
     sources=["**/*.py"],
-    dependencies=[
-        ":poetry",
-    ],
+    dependencies=[":poetry", "libs/python/mediators:lib"],
 )
 python_tests(
     name="tests",

@@ -35,7 +35,8 @@ enable_resolves = true
 search_path = ["<PYENV>", "<PATH>", "<PYENV_LOCAL>"]
 
 [python.resolves]
-gateway = "services/gateway/gateway.lock"
+default = "lockfiles/default.lock"
+gateway = "lockfiles/gateway.lock"
 
 [python-infer]
 use_rust_parser = true

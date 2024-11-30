@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from gateway.infra.uow.base import CURRENT_SESSION
-from gateway.logic.commands.base import CommandHandler
+from mediators.handlers.commands import CommandHandler
 
 if TYPE_CHECKING:
     from gateway.logic.commands.test.commands import SessionTestCommand  # noqa

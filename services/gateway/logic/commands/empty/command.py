@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
 
-from gateway.logic.commands.base import BaseCommand, register_command_handler
 from gateway.logic.commands.empty.handler import (
     EmptyCommandHandler,
     EmptyCommandHandler2,
 )
+from mediators.handlers.commands.base import BaseCommand, register_command_handler
 
 
 @register_command_handler(EmptyCommandHandler2)

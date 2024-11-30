@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import TypeVar
 
-from gateway.logic.commands.base import CR, CT, BaseCommand, CommandHandler
-from gateway.logic.exceptions.mediator import CommandHandlerNotRegisteredError
-from gateway.logic.mediators.base import BaseCommandMediator
+from mediators.exceptions.mediators import CommandHandlerNotRegisteredError
+from mediators.handlers.commands import CR, CT, BaseCommand, CommandHandler
+from mediators.mediators.base import BaseCommandMediator
 
 T = TypeVar("T")
 
