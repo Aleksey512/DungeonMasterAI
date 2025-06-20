@@ -1,3 +1,6 @@
+*.db
+*.sqlite3
+*.sqlite
 .null-ls*.py
 test_reports
 /.pants.d/

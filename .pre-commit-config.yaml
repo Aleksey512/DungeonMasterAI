@@ -3,35 +3,33 @@ default_language_version:
   python: python3.12
 
 repos:
-- repo: https://github.com/commitizen-tools/commitizen
-  rev: v3.31.0
-  hooks:
-    - id: commitizen
-      stages: [commit-msg]
+  - repo: git@github.com:commitizen-tools/commitizen.git
+    rev: v3.31.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
 
+  - repo: git@github.com:pre-commit/mirrors-mypy.git
+    rev: v1.16.1
+    hooks:
+      - id: mypy
+        name: mypy
+        args: [--config-file=mypy.ini]
+        language_version: python3.12
+        pass_filenames: false
 
-- repo: local
-  hooks:
-    - id: check-build-files
-      name: check-build-files
-      entry: sh -c "pants tailor --check update-build-files --check ::"
-      language: system
-      pass_filenames: false
+  - repo: git@github.com:PyCQA/flake8.git
+    rev: 7.2.0
+    hooks:
+      - id: flake8
+        name: flake8
+        pass_filenames: false
 
-    - id: check-code-format-and-style
-      name: check-code-format-and-style
-      entry: sh -c "pants lint ::"
-      language: system
-      pass_filenames: false
-
-    - id: check-typing
-      name: check-typing
-      entry: sh -c "pants --changed-since=main --changed-dependees=transitive check"
-      language: system
-      pass_filenames: false
-
-    - id: run-tests
-      name: run-tests
-      entry: sh -c "pants test ::"
-      language: system
-      pass_filenames: false
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest-check
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true

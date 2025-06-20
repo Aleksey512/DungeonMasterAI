@@ -1,0 +1,22 @@
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+skip-string-normalization = true
+preview = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.pants.d
+  | \.venv
+  | _build
+  | build
+  | dist
+  | migrations
+  | node_modules
+  | test_reports
+  | templates
+)/
+'''
