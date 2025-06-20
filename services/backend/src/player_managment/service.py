@@ -2,8 +2,10 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from src.core.infra.database.session import sessionmaker
-from src.player_managment.exceptions import (PlayerNotExistsError,
-                                             PlayerWithThisEmailExistsError)
+from src.player_managment.exceptions import (
+    PlayerNotExistsError,
+    PlayerWithThisEmailExistsError,
+)
 from src.player_managment.repository import PlayerRepository
 from src.player_managment.schemas import PlayerCreate, PlayerResponse
 

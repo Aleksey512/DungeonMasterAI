@@ -5,7 +5,6 @@ FastApi integrations di
 from typing import Any
 
 from fastapi import Depends
-
 from src.core.di import init_container
 
 

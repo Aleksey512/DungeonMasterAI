@@ -1,11 +1,10 @@
+from src.core.config.settings import settings
 from taskiq import InMemoryBroker
 from taskiq.brokers.inmemory_broker import InmemoryResultBackend
 from taskiq.middlewares import SimpleRetryMiddleware
 from taskiq_aio_pika.broker import AioPikaBroker
 from taskiq_pipelines import PipelineMiddleware
 from taskiq_redis import RedisAsyncResultBackend
-
-from src.core.config.settings import settings
 
 broker = AioPikaBroker(settings.rabbitmq_url)
 rbackend = RedisAsyncResultBackend(

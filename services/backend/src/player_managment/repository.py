@@ -4,7 +4,6 @@ from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from src.player_managment.models import Player
 from src.player_managment.schemas import PlayerCreate
 

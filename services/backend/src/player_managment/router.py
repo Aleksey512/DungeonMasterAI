@@ -1,7 +1,6 @@
+from core.dependencies import resolve_dependency
 from fastapi import APIRouter
 from pydantic import UUID4
-
-from core.dependencies import resolve_dependency
 from src.player_managment.schemas import PlayerCreate, PlayerResponse
 from src.player_managment.service import PlayerManagmentService
 

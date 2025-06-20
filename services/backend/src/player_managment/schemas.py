@@ -2,7 +2,6 @@ from typing import Self
 from uuid import UUID
 
 from pydantic import BaseModel, EmailStr
-
 from src.player_managment.models import Player
 
 

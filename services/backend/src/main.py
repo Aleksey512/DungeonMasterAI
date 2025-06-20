@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
-
 from src.core.exceptions.base import BaseError
 from src.lifespan import lifespan
 from src.player_managment.router import router as player_managment_router

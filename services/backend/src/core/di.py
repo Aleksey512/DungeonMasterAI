@@ -1,7 +1,6 @@
 from functools import lru_cache
 
 import punq
-
 from src.player_managment.repository import PlayerRepository
 from src.player_managment.service import PlayerManagmentService
 
