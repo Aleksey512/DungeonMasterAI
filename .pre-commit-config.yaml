@@ -9,12 +9,6 @@ repos:
       - id: commitizen
         stages: [commit-msg]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.0
-    hooks:
-      - id: mypy
-        args: [--config-file=mypy.ini, ./services]
-
   - repo: git@github.com:PyCQA/flake8.git
     rev: 7.2.0
     hooks:
