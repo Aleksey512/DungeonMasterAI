@@ -1,17 +1,49 @@
-default_stages: [pre-push]
-default_language_version:
-  python: python3.12
-
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+      - id: check-ast
+      - id: trailing-whitespace
+      - id: check-toml
+      - id: end-of-file-fixer
+
   - repo: git@github.com:commitizen-tools/commitizen.git
     rev: v3.31.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
 
-  - repo: git@github.com:PyCQA/flake8.git
-    rev: 7.2.0
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.1.0
     hooks:
-      - id: flake8
-        name: flake8
+      - id: add-trailing-comma
+
+  - repo: local
+    hooks:
+      - id: black
+        name: Format with Black
+        entry: poetry run black
+        language: system
+        types: [python]
+
+      - id: ruff
+        name: Run ruff lints
+        entry: poetry run ruff
+        language: system
         pass_filenames: false
+        types: [python]
+        args:
+          - "check"
+          - "--fix"
+          - "dungeonmasterai"
+          - "tests"
+
+      - id: mypy
+        name: Validate types with MyPy
+        entry: poetry run mypy
+        language: system
+        pass_filenames: false
+        types: [python]
+        args:
+          - ./dungeonmasterai
+          - ./tests
