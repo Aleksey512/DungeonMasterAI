@@ -1,12 +1,14 @@
 from dungeonmasterai.abc.entities import IEntity
+from dungeonmasterai.abc.events import Event, EventBus
+from dungeonmasterai.abc.systems.character import CharacterEvents
 from dungeonmasterai.abc.systems.combat import (
     ICombatSystem,
 )
 
 
 class CombatSystem(ICombatSystem):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, e_bus: EventBus) -> None:
+        super().__init__(e_bus)
         self._in_combat = False
         self._entities: set[IEntity] = set()
 
@@ -36,5 +38,14 @@ class CombatSystem(ICombatSystem):
         if target not in self._entities:
             print("Target not in combat")
             return
-        print(f"{attacker} attack {target}")
-        return
+        print(f"{attacker} attack {target} for {attacker.attack} hp")
+        self._e_bus.send_event(
+            Event(
+                name=CharacterEvents.character_take_damage,
+                args=(
+                    target,
+                    attacker.attack,
+                ),
+                kwargs={},
+            ),
+        )

@@ -2,11 +2,18 @@ from collections import defaultdict
 from inspect import signature
 from typing import Any, Callable
 
+from dungeonmasterai.abc.events import EventBus
+
 
 class System:
-    def __init__(self, priority: int = 0) -> None:
+    def __init__(self, ebus: EventBus, priority: int = 0) -> None:
         self._event_handlers: dict[str, list[Callable[..., None]]] = defaultdict(list)
+        self._e_bus = ebus
         self.priority = priority
+
+    def listen(self) -> None:
+        for event in self._e_bus.listen():
+            self.emit(event.name, *event.args, **event.kwargs)
 
     def subscribe(self, event: str, handler: Callable[..., None]) -> None:
         self._event_handlers[event].append(handler)
