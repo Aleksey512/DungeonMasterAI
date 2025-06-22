@@ -1,5 +1,3 @@
-from typing import Iterable
-
 from dungeonmasterai.abc.entities import IEntity
 from dungeonmasterai.abc.systems.combat import (
     ICombatSystem,

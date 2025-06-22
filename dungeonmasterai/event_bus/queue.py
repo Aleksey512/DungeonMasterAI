@@ -1,6 +1,6 @@
 import queue
 import threading
-from typing import Any, Generator, cast
+from typing import Any, Generator
 
 from dungeonmasterai.abc.events import Event, EventBus
 
