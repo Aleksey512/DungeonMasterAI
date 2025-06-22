@@ -140,7 +140,7 @@ DungeonMasterAI — это инновационное приложение дл�
 
 ## 📞 Контакты
 
-- Авторы: 
+- Авторы:
   - [Aleksey512](https://github.com/Aleksey512)
   - [JellyWilliam](https://github.com/JellyWilliam)
 - GitHub Issues: [Обсуждение проблем и идей](https://github.com/Aleksey512/DungeonMasterAI/issues)
