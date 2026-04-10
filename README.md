@@ -1,155 +1,125 @@
-# DungeonMasterAI 🎲🤖
+# DungeonMasterAI
 
-DungeonMasterAI — это инновационное приложение для игры в Dungeons & Dragons,
-основанное на современных технологиях искусственного интеллекта.
-Проект демонстрирует возможности микросервисной архитектуры, генерации текстов (LLM) и изображений (Text2Image)
-для создания увлекательного игрового опыта.
+An AI-powered Dungeons & Dragons application with microservices architecture. Features an AI DungeonMaster for story generation, game management, and multimedia content creation.
 
----
+## Architecture
 
-## 🧙‍♂️ Основные возможности
+The project follows **Clean Architecture** with **CQRS** (Command Query Responsibility Segregation) and **Mediator** pattern.
 
-1. **Локальная и онлайн игра**:
-   - Локальный режим: всё происходит на одном устройстве.
-   - Онлайн режим: создавайте комнаты или присоединяйтесь по коду/ссылке.
+```
+┌──────────────────────────────────────────────────┐
+│                  Application Layer                │
+│              (FastAPI REST endpoints)             │
+├──────────────────────────────────────────────────┤
+│                   Logic Layer                     │
+│         (Commands, Queries, Events, DI)           │
+├──────────────────────────────────────────────────┤
+│                  Domain Layer                     │
+│       (Entities, Value Objects, Events)           │
+├──────────────────────────────────────────────────┤
+│               Infrastructure Layer                │
+│     (SQLAlchemy, Repositories, Unit of Work)      │
+└──────────────────────────────────────────────────┘
+```
 
-2. **Искусственный интеллект DungeonMaster**:
-   - Генерация сюжетов, описаний и взаимодействий.
-   - Управление игровым процессом, включая броски кубиков и проверку навыков.
+## Features
 
-3. **Генерация мультимедийного контента**:
-   - Создание изображений (локаций, монстров, предметов) по текстовому описанию.
-   - Поддержка генерации по запросу игроков.
+- **AI DungeonMaster** — story generation and game session management
+- **Microservices** — independent services communicating via events
+- **CQRS + Mediator** — custom mediator library for command/query/event separation
+- **Domain-Driven Design** — aggregate roots, value objects, domain events
+- **Unit of Work** — transactional consistency with async context managers
 
-4. **Реализация микросервисной архитектуры**:
-   - Отдельные сервисы для управления играми, генерации текста/изображений и чатов.
+## Tech Stack
 
----
+| Layer | Technology |
+|-------|-----------|
+| API | FastAPI, Uvicorn |
+| ORM | SQLAlchemy 2.0 (async) |
+| Migrations | Alembic |
+| DI Container | punq |
+| Auth | HMAC-SHA256, JWT (access + refresh tokens) |
+| Build | Pants Build System |
+| Containers | Docker |
+| Linting | Black, isort, flake8, mypy |
+| Testing | pytest, pytest-asyncio, Faker |
 
-## 📂 Структура проекта
+## Project Structure
 
-Проект организован как микросервисная архитектура с использованием Python и современных DevOps-инструментов.
-Ниже представлена структура проекта с кратким описанием основных компонентов:
+```
+├── libs/
+│   └── python/
+│       └── mediators/              # Custom CQRS mediator library
+│           ├── handlers/           # Command, Query, Event handlers
+│           ├── mediators/          # Mediator implementations
+│           └── registries/         # Handler registries
+├── services/
+│   └── gateway/                    # Main API service
+│       ├── application/api/        # FastAPI app and endpoints
+│       ├── domain/                 # Entities, Value Objects, Events
+│       ├── infra/                  # Repositories, Unit of Work
+│       ├── logic/                  # DI container, mediator setup
+│       ├── migrations/             # Alembic database migrations
+│       ├── settings/               # Pydantic configuration
+│       └── tests/                  # Unit and integration tests
+└── docker/                         # Dockerfiles
+```
 
-### Основные директории
+## Getting Started
 
-- **`docker/gateway/`** — конфигурации Docker для Gateway-сервиса.
-- **`libs/python/mediators/`** — библиотеки Python для медиации между слоями приложения.
-- **`services/gateway/`** — основной код Gateway-сервиса:
-  - **`application/api/`** — точки входа API, включая маршруты и обработчики.
-  - **`domain/`** — бизнес-логика и сущности (пользователи, события).
-  - **`infra/`** — инфраструктурный слой (репозитории, единицы работы).
-  - **`logic/`** — обработчики команд и событий.
-  - **`settings/`** — конфигурации, логгирование и настройки приложения.
-- **`tests/`** — модульные и интеграционные тесты.
-- **`migrations/`** — управление миграциями базы данных (Alembic).
-- **`settings/`** — конфигурационные файлы для разных сред.
+### Prerequisites
 
-### Конфигурационные файлы
+- Python 3.12+
+- [Pants](https://www.pantsbuild.org/) build system
+- Docker (optional)
 
-- **`pants.toml`** — настройки для управления зависимостями и сборкой через [Pants Build System](https://www.pantsbuild.org/).
-- **`pyproject.toml`** — конфигурация Poetry для управления зависимостями Python.
-- **`.pre-commit-config.yaml`** — настройки для автоматических проверок перед коммитом (Pre-commit).
-- **`.flake8`** — правила линтинга Python-кода.
+### Development
 
----
+```bash
+# Install Pants
+./get-pants.sh
 
-## 🚀 Быстрый старт
+# Run the gateway service
+pants run services/gateway:main
 
-1. Убедитесь, что у вас установлен [Docker](https://www.docker.com/).
-2. Склонируйте репозиторий:
-   ```bash
-   git clone https://github.com/Aleksey512/DungeonMasterAI.git
-   cd DungeonMasterAI
-   ```
-3. Запустите проект с помощью `docker-compose`:
-   ```bash
-   docker-compose up --build
-   ```
-4. Откройте приложение в браузере:
-   ```
-   http://localhost:3000
-   ```
+# Run tests
+pants test services/gateway/tests::
 
----
+# Lint
+pants lint ::
 
-## 🛠️ Технологии
+# Type check
+pants check ::
+```
 
-- **Backend**:
-  - Python (FastAPI, Mediator pattern)
-  - SQLAlchemy (ORM)
-  - Alembic (миграции базы данных)
-- **Frontend**:
-  - React/Next.js (планируется)
-- **DevOps**:
-  - Docker, Docker Compose
-  - Pants Build System
-  - Poetry (управление зависимостями)
-- **Инструменты качества**:
-  - Flake8
-  - Pre-commit
-  - Hadolint (для проверки Dockerfile)
+### Docker
 
----
+```bash
+# Build and run
+pants package services/gateway:docker
+docker-compose up
+```
 
-## 🧪 Тестирование
+## Mediator Library
 
-Проект включает модульные и интеграционные тесты.
+The project includes a custom mediator library (`libs/python/mediators/`) implementing the CQRS pattern:
 
-### Запуск тестов
-1. Установите тестовые зависимости:
-   ```bash
-   poetry install --with test
-   ```
-2. Запустите тесты:
-   ```bash
-   pytest
-   ```
+```python
+# Register a command handler
+@command_registry.register(CreateUserCommand)
+class CreateUserHandler(CommandHandler):
+    async def handle(self, command: CreateUserCommand) -> None:
+        ...
 
----
+# Dispatch through mediator
+await mediator.handle_command(CreateUserCommand(email="user@example.com"))
+```
 
-## 🌟 Особенности архитектуры
+## Authors
 
-Проект демонстрирует ключевые принципы микросервисной архитектуры:
-1. **Разделение сервисов по функционалу**: управление играми, чаты, генерация контента.
-2. **Поддержка масштабирования**: каждый сервис может работать независимо.
-3. **Интеграция AI и мультимедиа**: применение LLM и Text2Image для игр.
+- [Aleksey512](https://github.com/Aleksey512)
+- [JellyWilliam](https://github.com/JellyWilliam)
 
----
+## License
 
-## 🛡️ Лицензия
-
-Этот проект распространяется под лицензией **MIT**. Подробнее см. [LICENSE](LICENSE).
-
----
-
-## 🧑‍💻 Вклад в проект
-
-Мы открыты для ваших идей и предложений! Вот как вы можете помочь:
-1. Форкните репозиторий и создайте свою ветку:
-   ```bash
-   git checkout -b feature/your-feature
-   ```
-2. Внесите изменения и сделайте коммит:
-   ```bash
-   git commit -m "Добавил новую фичу"
-   ```
-3. Отправьте ваш Pull Request.
-
----
-
-## 📞 Контакты
-
-- Авторы:
-  - [Aleksey512](https://github.com/Aleksey512)
-  - [JellyWilliam](https://github.com/JellyWilliam)
-- GitHub Issues: [Обсуждение проблем и идей](https://github.com/Aleksey512/DungeonMasterAI/issues)
-
----
-
-## 🔗 Ссылки
-
-- [Документация FastAPI](https://fastapi.tiangolo.com/)
-- [Docker](https://www.docker.com/)
-- [Poetry](https://python-poetry.org/)
-- [Pants Build System](https://www.pantsbuild.org/)
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
